@@ -1,5 +1,6 @@
 flrp = {
   config = config || {},
+  including = including || {},
 }
 
 GM = GM or GAMEMODE
