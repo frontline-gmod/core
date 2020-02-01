@@ -1,7 +1,7 @@
 "militaryrp"
 {
 	"base"		"base"
-	"title"		"FrontLine RP v.1"
+	"title"		"FrontLine"
 	"maps"		"^gm_|^gmod_|^rp_|^fl_"
 	"menusystem"	"0"
 }
