@@ -6,7 +6,7 @@ flrp.include_sh = function(f)
 	flrp.include_cl(f)
 end
 
-function flrp. (fileName, strState)
+function flrp.include_load (fileName, strState)
 
 	if ((strState == "server" or string.find(fileName, "sv_")) and SERVER) then
 		flrp.include_sv(fileName)
