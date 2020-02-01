@@ -2,6 +2,6 @@
 {
 	"base"		"base"
 	"title"		"FrontLine RP"
-	"maps"		"^gm_|^gmod_|^rp_"
+	"maps"		"^gm_|^gmod_|^rp_|^fl_"
 	"menusystem"	"0"
 }
