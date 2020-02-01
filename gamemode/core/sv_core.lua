@@ -10,6 +10,8 @@ function GM:PlayerLoadout( ply )
 
   if flrp.config.enable_module == "Roleplay" then
     player_manager.SetPlayerClass(ply, "roleplay_class")
+  else
+    player_manager.SetPlayerClass(ply, "standart_class")
   end
 
 	ply:ShouldDropWeapon(false)
@@ -35,20 +37,20 @@ function GM:PlayerLoadout( ply )
 	--    ply:Give(v)
   --end
 
-  pPlayer:SetPlayerColor( Vector( 1, 1, 1 ) )
+  ply:SetPlayerColor( Vector( 1, 1, 1 ) )
 
-   pPlayer:SetCrouchedWalkSpeed(25)
-   pPlayer:SetWalkSpeed(100)
-   pPlayer:SetJumpPower(160)
-   pPlayer:SetRunSpeed(225)
+  ply:SetCrouchedWalkSpeed(25)
+  ply:SetWalkSpeed(100)
+  ply:SetJumpPower(160)
+  ply:SetRunSpeed(225)
 
-	 pPlayer:SetMaxHealth(100)
-   pPlayer:SetHealth(100)
-   pPlayer:SetArmor(0)
+  ply:SetMaxHealth(100)
+  ply:SetHealth(100)
+  ply:SetArmor(0)
 
-   pPlayer:SetModel("models/player/charple.mdl")
+  ply:SetModel("models/player/charple.mdl")
 
-   return true
+  return true
 
 end
 

@@ -1,3 +1,6 @@
+flrp = flrp ||  {}
+flrp.including = flrp.including || {}
+
 flrp.including.include_sv = (SERVER) and include or function() end
 flrp.including.include_cl = (SERVER) and AddCSLuaFile or include
 
