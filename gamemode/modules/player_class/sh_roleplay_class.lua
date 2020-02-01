@@ -8,7 +8,6 @@ PLAYER.CrouchedWalkSpeed	= 15
 PLAYER.DuckSpeed	= 0.3
 PLAYER.UnDuckSpeed	= 0.3
 PLAYER.JumpPower	= 200
-PLAYER.AllowFlashlight	=	true
 PLAYER.MaxHealth	= 100
 PLAYER.StartHealth	= 100
 PLAYER.StartArmor	= 0
