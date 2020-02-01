@@ -1,0 +1,40 @@
+function FrontLineFpsBooster()
+
+  local ply = LocalPlayer()
+
+  ply:ConCommand("gmod_mcore_test 1")
+  ply:ConCommand("mat_queue_mode -1")
+  ply:ConCommand("cl_threaded_bone_setup 1")
+  ply:ConCommand("cl_threaded_client_leaf_system 1")
+  ply:ConCommand("r_threaded_particles 1")
+  ply:ConCommand("r_threaded_renderables 1")
+  ply:ConCommand("r_queued_ropes 1")
+  ply:ConCommand("studio_queue_mode 1")
+
+  hook.Remove("RenderScreenspaceEffects", "RenderColorModify")
+  hook.Remove("RenderScreenspaceEffects", "RenderBloom")
+  hook.Remove("RenderScreenspaceEffects", "RenderToyTown")
+  hook.Remove("RenderScreenspaceEffects", "RenderTexturize")
+  hook.Remove("RenderScreenspaceEffects", "RenderSunbeams")
+  hook.Remove("RenderScreenspaceEffects", "RenderSobel")
+  hook.Remove("RenderScreenspaceEffects", "RenderSharpen")
+  hook.Remove("RenderScreenspaceEffects", "RenderMaterialOverlay")
+  hook.Remove("RenderScreenspaceEffects", "RenderMotionBlur")
+  hook.Remove("RenderScene", "RenderStereoscopy")
+  hook.Remove("RenderScene", "RenderSuperDoF")
+  hook.Remove("GUIMousePressed", "SuperDOFMouseDown")
+  hook.Remove("GUIMouseReleased", "SuperDOFMouseUp")
+  hook.Remove("PreventScreenClicks", "SuperDOFPreventClicks")
+  hook.Remove("PostRender", "RenderFrameBlend")
+  hook.Remove("PreRender", "PreRenderFrameBlend")
+  hook.Remove("Think", "DOFThink")
+  hook.Remove("RenderScreenspaceEffects", "RenderBokeh")
+  hook.Remove("NeedsDepthPass", "NeedsDepthPass_Bokeh")
+  hook.Remove("PostDrawEffects", "RenderWidgets")
+  hook.Remove("PostDrawEffects", "RenderHalos")
+
+  ply:ChatPrint("[FL-RP] Прогрузка ФПС Бустера прошла успешно!")
+
+end
+
+hook.Add("InitPostEntity", "FrontLineFpsBooster", FrontLineFpsBooster)
