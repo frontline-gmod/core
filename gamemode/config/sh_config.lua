@@ -1,3 +1,9 @@
-flrp.config = flrp.config or {}
+flrp.config = flrp.config || {}
 
-flrp.config.enable_module = "Roleplay"
+flrp.config.enable_primary_module = "Roleplay"
+
+/*
+flrp.config.enable_secondary_modules = {
+  [""]
+}
+*/

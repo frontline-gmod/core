@@ -1,18 +1,20 @@
 function GM:PlayerSpawn( ply )
 
   hook.Call( "PlayerLoadout", GAMEMODE, ply );
-
 end
 
 function GM:PlayerLoadout( ply )
 
   if !(team and team ~= 1001) then return end
 
-  if flrp.config.enable_module == "Roleplay" then
+  /*
+  if flrp.config.enable_primary_module["Roleplay"] then
     player_manager.SetPlayerClass(ply, "roleplay_class")
   else
     player_manager.SetPlayerClass(ply, "standart_class")
   end
+  */
+  player_manager.SetPlayerClass(ply, "standart_class")
 
 	ply:ShouldDropWeapon(false)
 
@@ -49,6 +51,10 @@ function GM:PlayerLoadout( ply )
   ply:SetArmor(0)
 
   ply:SetModel("models/player/charple.mdl")
+
+  ply:ChatPrint(player_manager.GetPlayerClass(ply))
+
+  print(flrp.config.enable_primary_module)
 
   return true
 

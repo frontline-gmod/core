@@ -48,15 +48,9 @@ if !libs_isload then
 	libs_isload = true
 end
 
-flrp.including.include_dir 'core'
 flrp.including.include_dir 'config'
+flrp.including.include_dir 'core'
 flrp.including.include_dir 'modules'
-
-flrp.including.include_cl 'core/cl_fonts.lua'
-flrp.including.include_cl 'core/cl_fps.lua'
-flrp.including.include_sv 'core/sv_core.lua'
-
-flrp.including.include_sh 'config/sh_config.lua'
 
 flrp.including.include_sh 'modules/player_class/sh_standart_class.lua'
 flrp.including.include_sh 'modules/player_class/sh_roleplay_class.lua'
