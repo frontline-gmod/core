@@ -188,3 +188,13 @@ surface.CreateFont( "font_base_50", {
 	underline = true,
 	extended = true,
 })
+
+surface.CreateFont( "font_base_3d2d", {
+	font = "Arial",
+	size = 128,
+	weight = 1000,
+  antialias = true,
+	underline = true,
+	extended = true,
+  shadow = false
+})

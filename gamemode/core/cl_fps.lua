@@ -33,7 +33,7 @@ function FrontLineFpsBooster()
   hook.Remove("PostDrawEffects", "RenderWidgets")
   hook.Remove("PostDrawEffects", "RenderHalos")
 
-  ply:ChatPrint("[FL-RP] Прогрузка ФПС Бустера прошла успешно!")
+  chat.AddText( Color( 255, 174, 43 ), '[FL-RP]', Color( 192, 214, 228 ), ' ФПС бустер был активирован!' )
 
 end
 
