@@ -7,14 +7,11 @@ function GM:PlayerLoadout( ply )
 
   if !(team and team ~= 1001) then return end
 
-  /*
-  if flrp.config.enable_primary_module["Roleplay"] then
+  if flrp.config.enable_primary_module == "Roleplay" then
     player_manager.SetPlayerClass(ply, "roleplay_class")
   else
     player_manager.SetPlayerClass(ply, "standart_class")
   end
-  */
-  player_manager.SetPlayerClass(ply, "standart_class")
 
 	ply:ShouldDropWeapon(false)
 
