@@ -49,8 +49,12 @@ if !libs_isload then
 end
 
 flrp.including.include_dir 'config'
+flrp.including.include_dir 'libs/xeninui'; flrp.including.include_cl 'libs/cl_fonts.lua'
 flrp.including.include_dir 'core'
 flrp.including.include_dir 'modules'
+
+flrp.including.include_cl 'modules/ui/cl_hud.lua'
+flrp.including.include_sh 'modules/roleplay/sh_roleplay_config.lua'
 
 flrp.including.include_sh 'modules/player_class/sh_standart_class.lua'
 flrp.including.include_sh 'modules/player_class/sh_roleplay_class.lua'
