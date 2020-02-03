@@ -79,7 +79,6 @@ local function FLRPHudPlayers( ply )
  		local offset = Vector( -3, 0, 85 )
  		local ang = LocalPlayer():EyeAngles()
 		local pos = ply:GetPos() + offset + ang:Up()
-
    	local team_color = team.GetColor()
 
  		ang:RotateAroundAxis( ang:Forward(), 90 )

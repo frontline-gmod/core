@@ -61,5 +61,5 @@ hook.Add( "PreGamemodeLoaded", "frontline_widgets_disable", function()
 end )
 
 if flrp.config.enable_secondary_modules["CanPropertyAdmin"] == true then
-  hook.Add("CanProperty", "block_remover_property", function( ply, property, ent ) if ( !ply:IsAdmin() ) then return false end end )
+  hook.Add("CanProperty", "block_remover_property", function( ply ) if ( !ply:IsAdmin() ) then return false end end )
 end
