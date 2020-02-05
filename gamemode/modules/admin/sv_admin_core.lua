@@ -9,6 +9,12 @@ function FLRPNoclip( ply )
   	else
   		ply:SetMoveType(MOVETYPE_WALK)
   	end
+    if !GetAdminPermission( ply, "nologs" ) && flrp.config.logs["admin"] then
+      flrp.logs.printlog( "[FL ADMIN] " .. ply:Nick() .. " использовал ноуклип." )
+      for k, v in pairs( player.GetAll() ) do
+        v:SendLua( "chat.AddText( Color( 255, 174, 43 ), '[FL ADMIN] ', Color( 192, 214, 228 ), ' " .. util.TypeToString(ply:Nick()) .. " использовал ноуклип.' )" )
+      end
+    end
   end
 end
 

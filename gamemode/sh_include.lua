@@ -57,9 +57,12 @@ flrp.including.include_dir 'core'
 flrp.including.include_cl 'modules/ui/cl_hud.lua'
 flrp.including.include_sh 'modules/roleplay/sh_roleplay_config.lua'
 
-flrp.including.include_sv 'modules/admin/sh_admin_core.lua'
+flrp.including.include_sh 'modules/admin/sh_admin_core.lua'
 flrp.including.include_sv 'modules/admin/sv_admin_core.lua'
 flrp.including.include_cl 'modules/admin/cl_admin_menu.lua'
+
+flrp.including.include_sh 'modules/logs/sh_logs_config.lua'
+flrp.including.include_sv 'modules/logs/sv_logs_functions.lua'
 
 flrp.including.include_sh 'modules/jobs/sh_jobs.lua'
 flrp.including.include_sh 'modules/jobs/sh_jobs_list.lua'
