@@ -1,3 +1,7 @@
+function GetAdminUsergroup( usergroup )
+  if flrp.config.usergroup["" .. usergroup .. ""] then return true else return false end
+end
+
 function GetAdminPermission( ply, permission )
   return table.HasValue(flrp.config.usergroup["" .. ply:GetUserGroup() .. ""], permission)
 end
