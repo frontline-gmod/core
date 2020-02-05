@@ -44,12 +44,14 @@ local libs_isload
 if !libs_isload then
 	flrp.including.include_sh 'libs/pon.lua'
 	flrp.including.include_sh 'libs/netstream.lua'
+	flrp.including.include_cl 'libs/cl_fonts.lua'
+
+	flrp.including.include_sh 'libs/sh_include_xenunui.lua'
 
 	libs_isload = true
 end
 
 flrp.including.include_dir 'config'
-flrp.including.include_dir 'libs/xeninui'; flrp.including.include_cl 'libs/cl_fonts.lua'
 flrp.including.include_dir 'core'
 
 flrp.including.include_cl 'modules/ui/cl_hud.lua'
