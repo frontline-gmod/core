@@ -33,7 +33,7 @@ function FrontLineFpsBooster()
   hook.Remove("PostDrawEffects", "RenderWidgets")
   hook.Remove("PostDrawEffects", "RenderHalos")
 
-  chat.AddText( Color( 255, 174, 43 ), '[FL-RP]', Color( 192, 214, 228 ), ' ФПС бустер был активирован!' )
+  chat.AddText( Color( 0, 183, 91 ), '[FL-RP]', Color( 235, 235, 235 ), ' ФПС бустер был активирован!' )
 
 end
 
