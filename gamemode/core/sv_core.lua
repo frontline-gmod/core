@@ -36,8 +36,18 @@ function GM:PlayerLoadout( ply )
 
   ply:SetModel(team.WorldModel)
 
+  for k, v in pairs(flrp.config.default_weapons) do
+     ply:Give(v)
+  end
+
   for k, v in pairs(team.weapons) do
 	   ply:Give(v)
+  end
+
+  if GetAdminUsergroup( ply:GetUserGroup() ) then
+    for k, v in pairs(flrp.config.default_admin_weapons) do
+  	   ply:Give(v)
+    end
   end
 
   ply:SetPlayerColor( Vector( 1, 1, 1 ) )
