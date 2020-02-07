@@ -1,9 +1,10 @@
 /*
   noclip - права на ноуклип
   godmode - права на год мод
+  cloak - права на неведимку
   nologs - права на полную анонимность админки
-  viewlog - видеть админ. действия администраторов в чате
-  setrank - права на выдачу прав
+  viewlog - права видеть админ. действия администраторов в чате
+  setrank - права на выдачу групп
 */
 
 flrp.config.usergroup = {
@@ -12,6 +13,7 @@ flrp.config.usergroup = {
     "godmode",
     "viewlog",
     "setrank",
+    "cloak",
   },
 
   ["admin"] = {
@@ -24,4 +26,8 @@ flrp.config.usergroup = {
 flrp.config.usergroup.immunity = {
   ["user"] = 25,
   ["admin"] = 70,
+}
+
+flrp.config.admin_core_settings = {
+  ["EnableCloakWithNoclip"] = true,
 }
