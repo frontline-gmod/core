@@ -2,6 +2,7 @@
   noclip - права на ноуклип
   godmode - права на год мод
   cloak - права на неведимку
+  playerpickup - права на поднятие игроков
   nologs - права на полную анонимность админки
   viewlog - права видеть админ. действия администраторов в чате
   setrank - права на выдачу групп
@@ -14,6 +15,7 @@ flrp.config.usergroup = {
     "viewlog",
     "setrank",
     "cloak",
+    "playerpickup",
   },
 
   ["admin"] = {
