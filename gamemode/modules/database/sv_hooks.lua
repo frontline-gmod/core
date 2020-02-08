@@ -5,7 +5,7 @@ hook.Add("PlayerInitialSpawn", "frontline_player_initialze", function (ply)
 
   function existsQuery:onSuccess(data)
 	   if(#data == 0) then
-        local insertQuery = DataBase:prepare("INSERT INTO users (name, steamid64, team, unit, rank) VALUES (?,?,?,?,?)")
+        local insertQuery = DataBase:prepare("INSERT INTO users (name, steamid64, team, unit, rank, usergroup) VALUES (?,?,?,?,?)")
 
         function insertQuery:onSuccess()
             print("[FL-RP] Персонаж создан")
@@ -20,6 +20,7 @@ hook.Add("PlayerInitialSpawn", "frontline_player_initialze", function (ply)
         insertQuery:setString(3, "TEAM_DOB");
         insertQuery:setString(4, "Доброволец");
         insertQuery:setString(5, "");
+        insertQuery:setString(6, "user");
 
         insertQuery:start();
      end
