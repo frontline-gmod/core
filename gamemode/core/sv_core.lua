@@ -40,6 +40,8 @@ function GM:PlayerLoadout( ply )
      ply:Give(v)
   end
 
+  ply:SelectWeapon(flrp.config.default_weapons[1])
+
   for k, v in pairs(team.weapons) do
 	   ply:Give(v)
   end
