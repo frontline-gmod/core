@@ -121,3 +121,27 @@ hook.Add( "PostPlayerDeath", "FLRPAdminDeath", function( ply )
     end
   end
 end)
+
+hook.Add( "PhysgunPickup", "FLRPAdminPickUpPlayer", function( ply, ent )
+	if GetAdminPermission( ply, "playerpickup" ) && ( ent:IsPlayer() && LikenAdminImmunity( ply, ent ) ) then
+    ent:GodEnable()
+    ent:SetNotSolid(true)
+    ent:AddFlags(FL_NOTARGET, FL_FROZEN)
+    ent:SetMoveType(MOVETYPE_NONE)
+    ent:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вас взял физганом администратор: " .. util.TypeToString(ply:Nick()) .. "' )" )
+    ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы взяли физганом игрока: " .. util.TypeToString(ent:Nick()) .. "' )" )
+    return true
+  end
+end )
+
+hook.Add( "PhysgunDrop", "FLRPAdminDropPlayer",function( ply, ent )
+  if GetAdminPermission( ply, "playerpickup" ) && ( ent:IsPlayer() && LikenAdminImmunity( ply, ent ) ) then
+    ent:GodDisable()
+    ent:SetNotSolid(false)
+    ent:RemoveFlags(FL_NOTARGET, FL_FROZEN)
+    ent:SetMoveType(MOVETYPE_WALK)
+    ent:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Администратор положил Вас!' )" )
+    ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы отпустили игрока!' )" )
+    return true
+  end
+end )
