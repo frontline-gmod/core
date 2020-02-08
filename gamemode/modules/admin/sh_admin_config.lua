@@ -3,6 +3,7 @@
   godmode - права на год мод
   cloak - права на неведимку
   playerpickup - права на поднятие игроков
+  teleport - права на телепорт игроков
   nologs - права на полную анонимность админки
   viewlog - права видеть админ. действия администраторов в чате
   setrank - права на выдачу групп
@@ -16,6 +17,7 @@ flrp.config.usergroup = {
     "setrank",
     "cloak",
     "playerpickup",
+    "teleport",
   },
 
   ["admin"] = {
