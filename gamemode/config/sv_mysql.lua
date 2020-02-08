@@ -23,3 +23,6 @@ function DataBase:onConnectionFailed( err )
 end
 
 DataBase:connect()
+
+UTF8Query = DataBase:query("SET NAMES utf8")
+UTF8Query:start()
