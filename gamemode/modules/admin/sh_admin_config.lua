@@ -23,7 +23,10 @@ flrp.config.usergroup = {
   ["admin"] = {
     "noclip",
     "godmode",
+    "viewlog",
     "setrank",
+    "cloak",
+    "playerpickup",
   },
 }
 

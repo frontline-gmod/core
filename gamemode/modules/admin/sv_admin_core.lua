@@ -14,11 +14,6 @@ function CheckAdminImmunity( ply, target )
   if flrp.config.usergroup.immunity["" .. ply:GetUserGroup() .. ""] >= flrp.config.usergroup.immunity["" .. target:GetUserGroup() .. ""] then return true else return false end
 end
 
-function CheckSteamID( target, steamid )
-  local steamid = string.upper( steamid )
-  if target:SteamID() == steamid then return true else return false end
-end
-
 function CheckSteamID64( target, steamid )
   if target:SteamID64() == steamid then return true else return false end
 end
@@ -36,7 +31,7 @@ function FLRPSetRank( ply, cmd, args )
 
   for k,v in pairs(player.GetAll()) do
     if GetAdminPermission( ply, "setrank" ) then
-      if (CheckName( v, target ) || CheckSteamID( v, target ) || CheckSteamID64( v, target )) && GetAdminUsergroup( usergroup ) && CheckAdminImmunity( ply, v ) then
+      if (CheckName( v, target ) || CheckSteamID64( v, target )) && GetAdminUsergroup( usergroup ) && CheckAdminImmunity( ply, v ) then
         v:SetUserGroup( usergroup )
         v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы получили привилегию: " .. util.TypeToString(usergroup) .. "')" )
         flrp.logs.printlog( "[FL ADMIN] " .. ply:Nick() .. " выдал игроку " .. v:Nick() .. " привилегию " .. util.TypeToString(usergroup) .. "." )
@@ -48,11 +43,8 @@ function FLRPSetRank( ply, cmd, args )
         ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы выдали привилегию " .. util.TypeToString(usergroup) .. " игроку " .. util.TypeToString(v:Nick()) .. "' )" )
       else
         if !GetAdminUsergroup( usergroup ) then ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Данная привилегия отсутствует!' )" ) end
-        if !CheckAdminImmunity( ply, v ) && (CheckName( v, target ) || CheckSteamID( v, target ) || CheckSteamID64( v, target )) then ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Ваш иммунитет меньше, чем у цели!' )" ) end
-
+        if !CheckAdminImmunity( ply, v ) && (CheckName( v, target ) || CheckSteamID64( v, target )) then ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Ваш иммунитет меньше, чем у цели!' )" ) end
       end
-    else
-      ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' У вас недостаточно прав!' )" )
     end
   end
 
@@ -82,8 +74,6 @@ function FLRPNoclip( ply )
         end
       end
     end
-  else
-    ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' У вас недостаточно прав!' )" )
   end
 
 end
@@ -123,8 +113,6 @@ function FLRPCloak( ply )
         end
       end
     end
-  else
-    ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' У вас недостаточно прав!' )" )
   end
 
 end
@@ -134,14 +122,15 @@ function FLRPBring ( ply, cmd, args )
   local target = args[1]
 
   for k, v in pairs( player.GetAll() ) do
-    if (CheckName( v, target ) || CheckSteamID( v, target ) || CheckSteamID64( v, target )) && GetAdminPermission( ply, "teleport" ) && CheckAdminImmunity( ply, v ) then
+    if (CheckName( v, target ) || CheckSteamID64( v, target )) && GetAdminPermission( ply, "teleport" ) && CheckAdminImmunity( ply, v ) then
       v:SetPos(ply:GetPos()-Vector(0,-75,-10))
       v:SetMoveType(MOVETYPE_NONE)
       v:SetMoveType(MOVETYPE_WALK)
       v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вас телепортировал администратор: " .. util.TypeToString(ply:Nick()) .. "' )" )
       ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы успешно телепортировали игрока!' )" )
     end
-    if !CheckAdminImmunity( ply, v ) && (CheckName( v, target ) || CheckSteamID( v, target ) || CheckSteamID64( v, target )) then ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Ваш иммунитет меньше, чем у цели!' )" ) end
+    if !CheckAdminImmunity( ply, v ) && (CheckName( v, target ) || CheckSteamID64( v, target )) then ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Ваш иммунитет меньше, чем у цели!' )" ) end
+
   end
 
 end
@@ -151,14 +140,14 @@ function FLRPGoto ( ply, cmd, args )
   local target = args[1]
 
   for k, v in pairs( player.GetAll() ) do
-    if (CheckName( v, target ) || CheckSteamID( v, target ) || CheckSteamID64( v, target )) && GetAdminPermission( ply, "teleport" ) && CheckAdminImmunity( ply, v ) then
+    if (CheckName( v, target ) || CheckSteamID64( v, target )) && GetAdminPermission( ply, "teleport" ) && CheckAdminImmunity( ply, v ) then
       ply:SetPos(v:GetPos()-Vector(0,-75,-10))
       ply:SetMoveType(MOVETYPE_NONE)
       ply:SetMoveType(MOVETYPE_WALK)
       ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы успешно телепортировались к игроку!' )" )
       v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' К вам телепортировался администратор: " .. util.TypeToString(ply:Nick()) .. "' )" )
     end
-    if !CheckAdminImmunity( ply, v ) && (CheckName( v, target ) || CheckSteamID( v, target ) || CheckSteamID64( v, target )) then ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Ваш иммунитет меньше, чем у цели!' )" ) end
+    if !CheckAdminImmunity( ply, v ) && (CheckName( v, target ) || CheckSteamID64( v, target )) then ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Ваш иммунитет меньше, чем у цели!' )" ) end
   end
 
 end
@@ -172,9 +161,7 @@ concommand.Add( "fl_check" , function (ply, cmd, args)
   local target = args[1]
 
   for k, v in pairs( player.GetAll() ) do
-    local target = string.lower(target)
-    local target_name = string.lower(v:Name())
-    if (target_name == target) then
+    if CheckName( v, target ) || CheckSteamID64( v, target ) then
       ply:ChatPrint("Привилегия: " .. v:GetUserGroup() .. " Иммунитет: " .. flrp.config.usergroup.immunity["" .. v:GetUserGroup() .. ""])
     end
   end
