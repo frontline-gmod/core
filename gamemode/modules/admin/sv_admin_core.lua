@@ -79,7 +79,7 @@ function FLRPCloak( ply )
 
   if ply:GetMoveType() == MOVETYPE_NOCLIP then ply:SetAdminCloak( false ) end
 
-  if GetAdminPermission( ply, "cloak" ) then
+  if GetAdminPermission( ply, "noclip" ) then
     if ply:GetAdminCloak() == nil then ply:SetAdminCloak( false ) end
     if ply:GetAdminCloak() == false then
       ply:SetNoDraw(true)
@@ -163,7 +163,7 @@ concommand.Add( "fl_check" , function (ply, cmd, args)
 end)
 
 hook.Add( "PostPlayerDeath", "FLRPAdminDeath", function( ply )
-  if GetAdminPermission( ply, "cloak" ) then
+  if GetAdminPermission( ply, "noclip" ) then
     if ply:GetAdminCloak() == true then
       ply:SetNoDraw(false)
       ply:SetNotSolid(false)
