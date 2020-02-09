@@ -45,7 +45,7 @@ if !libs_isload then
 	flrp.including.include_sh 'libs/pon.lua'
 	flrp.including.include_sh 'libs/netstream.lua'
 	flrp.including.include_cl 'libs/cl_fonts.lua'
-
+	flrp.including.include_sh 'libs/sh_include_xeninui.lua'
 
 	libs_isload = true
 end
