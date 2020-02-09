@@ -1,34 +1,11 @@
-hook.Add("PlayerInitialSpawn", "frontline_player_initialze", function (ply)
-  print("[FL]Player spawned");
-
-  local existsQuery = DataBase:prepare("SELECT * FROM users WHERE steamid64 = ?")
-
-  function existsQuery:onSuccess(data)
-	   if(#data == 0) then
-        local insertQuery = DataBase:prepare("INSERT INTO users (name, steamid64, team, unit, rank) VALUES (?,?,?,?,?)")
-
-        function insertQuery:onSuccess()
+hook.Add("PlayerInitialSpawn", "frontline_player_initialze", function (ply, button)
+  database.query("SELECT * FROM users WHERE steamid64 = ?", function(data)
+    if(#data == 0) then
+        database.query("INSERT INTO users (name, steamid64, team, unit, rank, usergroup) VALUES (?,?,?,?,?,?)", function(data)
             print("[FL-RP] Персонаж создан")
-        end
-
-        function insertQuery:onError(err)
-            print("[FL ERROR] An error occured while executing the query: " .. err)
-        end
-
-        insertQuery:setString(1, ply:Name());
-        insertQuery:setNumber(2, ply:SteamID64());
-        insertQuery:setString(3, "TEAM_DOB");
-        insertQuery:setString(4, "Доброволец");
-        insertQuery:setString(5, "");
-
-        insertQuery:start();
+        end, {ply:Name(), ply:SteamID64(), "TEAM_DOB", "Доброволец", "Rank", "user"})
+     else
+       print("[FL-RP] Персонаж найден. Идет загрузка!")
      end
-  end
-
-  function existsQuery:onError(err)
-  	print("[FL ERROR] An error occured while executing the query: " .. err)
-  end
-
-  existsQuery:setNumber(1, ply:SteamID64());
-  existsQuery:start();
+  end, {ply:SteamID64()})
 end)
