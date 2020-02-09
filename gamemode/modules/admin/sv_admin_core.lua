@@ -35,11 +35,6 @@ function FLRPSetRank( ply, cmd, args )
         v:SetUserGroup( usergroup )
         v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы получили привилегию: " .. util.TypeToString(usergroup) .. "')" )
         flrp.logs.printlog( "[FL ADMIN] " .. ply:Nick() .. " выдал игроку " .. v:Nick() .. " привилегию " .. util.TypeToString(usergroup) .. "." )
-        for k, val in pairs( player.GetAll() ) do
-          if GetAdminPermission( val, "viewlog" ) then
-            val:SendLua( "print ('[FL ADMIN] " .. ply:Nick() .. " выдал игроку " .. val:Nick() .. " привилегию " .. util.TypeToString(usergroup) .. ".')" )
-          end
-        end
         ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы выдали привилегию " .. util.TypeToString(usergroup) .. " игроку " .. util.TypeToString(v:Nick()) .. "' )" )
       else
         if !GetAdminUsergroup( usergroup ) then ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Данная привилегия отсутствует!' )" ) end
