@@ -2,6 +2,7 @@
   noclip - права на ноуклип и невидимку
   godmode - права на год мод
   playerpickup - права на поднятие игроков
+  setnotarget - права на отключение видимости игрока нпси
   teleport - права на телепорт игроков
   nologs - права на полную анонимность админки
   viewlog - права видеть админ. действия администраторов в чате
@@ -14,6 +15,7 @@ flrp.config.usergroup = {
     "godmode",
     "viewlog",
     "setrank",
+    "setnotarget",
     "playerpickup",
     "teleport",
   },

@@ -59,7 +59,6 @@ flrp.including.include_sh 'modules/roleplay/sh_roleplay_config.lua'
 
 flrp.including.include_sh 'modules/admin/sh_admin_core.lua'
 flrp.including.include_sv 'modules/admin/sv_admin_core.lua'
-flrp.including.include_cl 'modules/admin/cl_admin_menu.lua'
 
 flrp.including.include_sv 'modules/database/sv_module.lua'
 flrp.including.include_sv 'modules/database/sv_utils.lua'

@@ -147,11 +147,55 @@ function FLRPGoto ( ply, cmd, args )
 
 end
 
+function FLRPNoTarget ( ply, cmd, args )
+
+  local target = args[1]
+
+  for k, v in pairs( player.GetAll() ) do
+    if (CheckName( v, target ) || CheckSteamID64( v, target )) && GetAdminPermission( ply, "setnotarget" ) && CheckAdminImmunity( ply, v ) then
+      if v:GetFlags() != 65536 then
+        v:AddFlags(FL_NOTARGET)
+        ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы успешно выдали невидимку от НПСи!' )" )
+        v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вам была выдана невидимка от НПСи администратором: " .. util.TypeToString(ply:Nick()) .. "' )" )
+      else
+        v:RemoveFlags(FL_NOTARGET)
+        ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы успешно сняли невидимку от НПСи!' )" )
+        v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вам снял невидимку от НПСи администратор: " .. util.TypeToString(ply:Nick()) .. "' )" )
+      end
+    end
+    if !CheckAdminImmunity( ply, v ) && (CheckName( v, target ) || CheckSteamID64( v, target )) then ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Ваш иммунитет меньше, чем у цели!' )" ) end
+  end
+
+end
+
+function FLRPNoTarget ( ply, cmd, args )
+
+  local target = args[1]
+
+  for k, v in pairs( player.GetAll() ) do
+    if (CheckName( v, target ) || CheckSteamID64( v, target )) && GetAdminPermission( ply, "setnotarget" ) && CheckAdminImmunity( ply, v ) then
+      if v:GetFlags() != 65536 then
+        v:AddFlags(FL_NOTARGET)
+        ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы успешно выдали невидимку от НПСи!' )" )
+        v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вам была выдана невидимка от НПСи администратором: " .. util.TypeToString(ply:Nick()) .. "' )" )
+      else
+        v:RemoveFlags(FL_NOTARGET)
+        ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы успешно сняли невидимку от НПСи!' )" )
+        v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вам снял невидимку от НПСи администратор: " .. util.TypeToString(ply:Nick()) .. "' )" )
+      end
+    end
+    if !CheckAdminImmunity( ply, v ) && (CheckName( v, target ) || CheckSteamID64( v, target )) then ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Ваш иммунитет меньше, чем у цели!' )" ) end
+  end
+
+end
+
 concommand.Add( "fl_setrank" , FLRPSetRank )
 concommand.Add( "fl_noclip" , FLRPNoclip )
 concommand.Add( "fl_cloak" , FLRPCloak )
 concommand.Add( "fl_bring" , FLRPBring )
 concommand.Add( "fl_goto" , FLRPGoto )
+concommand.Add( "fl_notarget" , FLRPNoTarget )
+
 concommand.Add( "fl_check" , function (ply, cmd, args)
   local target = args[1]
 
