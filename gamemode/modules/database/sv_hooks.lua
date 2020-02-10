@@ -1,11 +1,11 @@
 hook.Add("PlayerInitialSpawn", "frontline_player_initialze", function (ply)
   database.orm.getBy("users", {
-    steamid64 = 123
+    steamid64 = ply:SteamID64()
   }, function(data)
     if(#data == 0) then
         database.orm.insert("users", {
           name = ply:Name(),
-          steamid64 = 123,
+          steamid64 = ply:SteamID64(),
           team = "TEAM_DOB",
           unit = "Доброволец",
           rank = "Rank",
