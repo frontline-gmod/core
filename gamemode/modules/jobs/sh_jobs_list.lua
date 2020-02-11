@@ -7,3 +7,5 @@ TEAM_DOB = flrp.jobs.add_job("Новобранец", {
 		ply:SetArmor(100)
 	end
 })
+
+flrp.jobs.standart_job = TEAM_DOB
