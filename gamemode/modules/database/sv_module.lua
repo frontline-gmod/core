@@ -4,7 +4,7 @@
 -- * Entity Manager (конструктор запросов для работы с сущностями базы данных)
 -- * Обертку под mysqloo для удобной и безопасной работы с базой данных
 --
--- Gor Mkhitaryan aka Chigiman (c)
+-- Gor Mkhitaryan aka Chigiman aka Ebus' v ochko (c)
 ----------------------------------------------------------------------------
 
 database = {
