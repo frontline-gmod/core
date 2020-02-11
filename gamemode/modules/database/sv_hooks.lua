@@ -8,7 +8,7 @@ hook.Add("PlayerInitialSpawn", "frontline_player_initialze", function (ply)
           steamid64 = ply:SteamID64(),
           team = "TEAM_DOB",
           unit = "Доброволец",
-          rank = "Rank",
+          rank = "",
           usergroup = "user"
         }, function(data)
             print("[FL-RP] Персонаж создан")
