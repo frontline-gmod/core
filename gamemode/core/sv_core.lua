@@ -85,7 +85,7 @@ hook.Add( "PreGamemodeLoaded", "frontline_widgets_disable", function()
 end )
 
 if flrp.config.enable_secondary_modules["CanPropertyAdmin"] == true then
-  hook.Add("CanProperty", "FLRPBlockProperty", function( ply ) if ( !ply:IsAdmin() ) then return false end end)
+  hook.Add("CanProperty", "FLRPBlockProperty", function( ply ) if ( !GetAdminUsergroup( ply:GetUserGroup() ) ) then return false end end)
 end
 
 if flrp.config.enable_secondary_modules["RealisticFallDamage"] == true then
