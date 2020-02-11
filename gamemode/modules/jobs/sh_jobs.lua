@@ -14,8 +14,7 @@ function flrp.jobs.add_job(name, job)
 	else
     job.Color = nil
     job.WorldModel = nil
-    job.weapons = nil
-    job.group_id = nil
+    job.Weapons = nil
 		job.PlayerSpawn = nil
 	end
 

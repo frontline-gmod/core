@@ -56,6 +56,11 @@ function FLRPSetRank( ply, command, args )
   if GetAdminPermission( ply, "setrank" ) && IsValid(target) then
     if GetAdminUsergroup( usergroup ) && CheckAdminImmunity( ply, target ) then
       target:SetUserGroup( usergroup )
+      database.orm.update("users", {
+        usergroup = usergroup
+      }, {
+        steamid64 = target:SteamID64()
+      })
       target:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы получили привилегию: " .. util.TypeToString(usergroup) .. "')" )
       flrp.logs.printlog( "[FL ADMIN] " .. ply:Nick() .. " выдал игроку " .. target:Nick() .. " привилегию " .. util.TypeToString(usergroup) .. "." )
       ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы выдали привилегию " .. util.TypeToString(usergroup) .. " игроку " .. util.TypeToString(target:Nick()) .. "' )" )

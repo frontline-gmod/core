@@ -1,7 +1,6 @@
 function GM:PlayerSpawn( ply )
-  ply:SetTeam(flrp.jobs.standart_job)
 
-  hook.Call( "PlayerLoadout", GAMEMODE, ply );
+  hook.Call( "PlayerLoadout", GAMEMODE, ply )
 end
 
 function GM:PlayerLoadout( ply )
@@ -15,11 +14,11 @@ function GM:PlayerLoadout( ply )
     player_manager.SetPlayerClass(ply, "standart_class")
   end
 
-	ply:ShouldDropWeapon(false)
+  ply:ShouldDropWeapon(false)
 
-	if ply:FlashlightIsOn() then
-		ply:Flashlight(false)
-	end
+  if ply:FlashlightIsOn() then
+    ply:Flashlight(false)
+  end
 
   ply:SetCollisionGroup(COLLISION_GROUP_PLAYER)
   ply:SetMaterial("")
@@ -34,6 +33,13 @@ function GM:PlayerLoadout( ply )
 
   ply:SetModelScale(1)
 
+  ply:SetPlayerColor( Vector( 1, 1, 1 ) )
+
+  ply:SetCrouchedWalkSpeed(25)
+  ply:SetWalkSpeed(100)
+  ply:SetJumpPower(160)
+  ply:SetRunSpeed(225)
+
   ply:SetModel(team.WorldModel)
 
   for k, v in pairs(flrp.config.default_weapons) do
@@ -42,36 +48,25 @@ function GM:PlayerLoadout( ply )
 
   ply:SelectWeapon(flrp.config.default_weapons[1])
 
-  for k, v in pairs(team.weapons) do
-	   ply:Give(v)
+  for k, v in pairs(team.Weapons) do
+     ply:Give(v)
   end
 
   if GetAdminUsergroup( ply:GetUserGroup() ) then
     for k, v in pairs(flrp.config.default_admin_weapons) do
-  	   ply:Give(v)
+       ply:Give(v)
     end
   end
 
-  ply:SetPlayerColor( Vector( 1, 1, 1 ) )
-
-  ply:SetCrouchedWalkSpeed(25)
-  ply:SetWalkSpeed(100)
-  ply:SetJumpPower(160)
-  ply:SetRunSpeed(225)
-
-  ply:SetMaxHealth(100)
-  ply:SetHealth(100)
-  ply:SetArmor(0)
-
   ply:SetMaxHealth(team.maxHealth or 100);
-	ply:SetHealth(team.maxHealth or 100);
-	ply:SetArmor(team.maxArmor or 0);
+  ply:SetHealth(team.maxHealth or 100);
+  ply:SetArmor(team.maxArmor or 0);
 
-	ply:SetModel(team.WorldModel)
+  ply:SetModel(team.WorldModel)
 
   if ply then
-		team.PlayerSpawn(ply)
-	end
+    team.PlayerSpawn(ply)
+  end
 
   return true
 
