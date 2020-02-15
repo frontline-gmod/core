@@ -62,7 +62,6 @@ function FLRPSetRank( ply, command, args )
         steamid64 = target:SteamID64()
       })
       target:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы получили привилегию: " .. util.TypeToString(usergroup) .. "')" )
-      flrp.logs.printlog( "[FL ADMIN] " .. ply:Nick() .. " выдал игроку " .. target:Nick() .. " привилегию " .. util.TypeToString(usergroup) .. "." )
       ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы выдали привилегию " .. util.TypeToString(usergroup) .. " игроку " .. util.TypeToString(target:Nick()) .. "' )" )
     else
       if !GetAdminUsergroup( usergroup ) then ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Данная привилегия отсутствует!' )" ) end
@@ -88,8 +87,7 @@ function FLRPNoclip( ply )
         FLRPCloak( ply )
       end
     end
-    if !GetAdminPermission( ply, "nologs" ) && flrp.config.logs["admin"] then
-      flrp.logs.printlog( "[FL ADMIN] " .. ply:Nick() .. " использовал ноуклип." )
+    if !GetAdminPermission( ply, "nologs" ) then
       for k, v in pairs( player.GetAll() ) do
         if GetAdminPermission( v, "viewlog" ) then
           v:SendLua( "print ('[FL ADMIN] " .. util.TypeToString(ply:Nick()) .. " использовал ноуклип. ')" )
@@ -115,7 +113,6 @@ function FLRPCloak( ply )
       ply:GodEnable()
       ply:SetAdminCloak( true )
       ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы включили невидимку!' )" )
-      flrp.logs.printlog( "[FL ADMIN] " .. ply:Nick() .. " использовал невидимку." )
       for k, v in pairs( player.GetAll() ) do
         if GetAdminPermission( v, "viewlog" ) then
           v:SendLua( "print ('[FL ADMIN] " .. ply:Nick() .. " использовал невидимку.')" )
@@ -128,7 +125,6 @@ function FLRPCloak( ply )
       ply:GodDisable()
       ply:SetAdminCloak( false )
       ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы выключили невидимку!' )" )
-      flrp.logs.printlog( "[FL ADMIN] " .. ply:Nick() .. " использовал невидимку." )
       for k, v in pairs( player.GetAll() ) do
         if GetAdminPermission( v, "viewlog" ) then
           v:SendLua( "print ('[FL ADMIN] " .. ply:Nick() .. " использовал невидимку.')" )
