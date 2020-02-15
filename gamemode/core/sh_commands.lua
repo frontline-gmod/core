@@ -15,5 +15,10 @@ hook.Add("PlayerSay", "FLRPAdminCommands", function( ply, text )
 		if ( string.sub( string.lower( text ), 1, 9 ) == "!notarget" ) then
 			ply:ConCommand( "fl_notarget" .. string.sub( text, 10 ) )
 		end
+    if flrp.config.enable_secondary_modules["Whitelist"] == true then
+      if ( string.sub( string.lower( text ), 1, 10 ) == "!whitelist" ) then
+        ply:ConCommand( "fl_whitelist" )
+      end
+    end
 	end
 end)
