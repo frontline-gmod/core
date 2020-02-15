@@ -39,11 +39,11 @@ function FindPlayer(identifier, user)
 		return output[1]
 	elseif (#output > 1) then
 		if (IsValid(user)) then
-			user:ChatPrint("Found more than one player with that identifier.")
+      user:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Найдено несколько игроков с такими данными.' )" )
 		end
 	else
 		if (IsValid(user)) then
-			user:ChatPrint("Can't find any player with that identifier.")
+      user:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Невозможно найти игрока с такими данными.' )" )
     end
 	end
 end
