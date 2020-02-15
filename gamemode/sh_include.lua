@@ -47,6 +47,8 @@ if !libs_isload then
 	flrp.including.include_cl 'libs/cl_fonts.lua'
 
 	flrp.including.include_sh 'libs/sh_include_xeninui.lua'
+	
+	flrp.including.include_sh 'libs/ordered_table.lua'
 
 	libs_isload = true
 end
@@ -64,8 +66,8 @@ flrp.including.include_sv 'modules/database/sv_module.lua'
 flrp.including.include_sv 'modules/database/sv_entity_manager.lua'
 flrp.including.include_sv 'modules/database/sv_hooks.lua'
 
-flrp.including.include_sh 'modules/logs/sh_logs_config.lua'
-flrp.including.include_sv 'modules/logs/sv_logs_functions.lua'
+flrp.including.include_sh 'modules/logs/sv_module.lua'
+flrp.including.include_sv 'modules/logs/sv_hooks.lua'
 
 flrp.including.include_sh 'modules/jobs/sh_jobs.lua'
 flrp.including.include_sh 'modules/jobs/sh_jobs_list.lua'
