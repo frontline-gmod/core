@@ -87,13 +87,6 @@ function FLRPNoclip( ply )
         FLRPCloak( ply )
       end
     end
-    if !GetAdminPermission( ply, "nologs" ) then
-      for k, v in pairs( player.GetAll() ) do
-        if GetAdminPermission( v, "viewlog" ) then
-          v:SendLua( "print ('[FL ADMIN] " .. util.TypeToString(ply:Nick()) .. " использовал ноуклип. ')" )
-        end
-      end
-    end
   end
 
 end
@@ -113,11 +106,6 @@ function FLRPCloak( ply )
       ply:GodEnable()
       ply:SetAdminCloak( true )
       ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы включили невидимку!' )" )
-      for k, v in pairs( player.GetAll() ) do
-        if GetAdminPermission( v, "viewlog" ) then
-          v:SendLua( "print ('[FL ADMIN] " .. ply:Nick() .. " использовал невидимку.')" )
-        end
-      end
     elseif ply:GetAdminCloak() == true then
       ply:SetNoDraw(false)
       ply:SetNotSolid(false)
@@ -125,11 +113,6 @@ function FLRPCloak( ply )
       ply:GodDisable()
       ply:SetAdminCloak( false )
       ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы выключили невидимку!' )" )
-      for k, v in pairs( player.GetAll() ) do
-        if GetAdminPermission( v, "viewlog" ) then
-          v:SendLua( "print ('[FL ADMIN] " .. ply:Nick() .. " использовал невидимку.')" )
-        end
-      end
     end
   end
 
@@ -193,15 +176,39 @@ function FLRPNoTarget ( ply, command, args )
 
 end
 
+function FLRPKick ( ply, command, args )
+
+  local target = FindPlayer( args[1], ply )
+  local reason = table.concat(args, " ", 2)
+
+  if reason == "" || nil then reason = "Без причины" end
+
+  if GetAdminPermission( ply, "kick" ) && IsValid(target) then
+    if CheckAdminImmunity( ply, target ) then
+      target:Kick(reason)
+      for k, v in pairs(player.GetAll()) do
+        v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), '" .. util.TypeToString(target:Name()) .. " был кикнут ".. util.TypeToString(ply:Name()) .." по причине: ".. util.TypeToString(reason) .."')" )
+      end
+    else
+      ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Ваш иммунитет меньше, чем у цели!' )" )
+    end
+  end
+
+end
+
 concommand.Add( "fl_setrank" , FLRPSetRank )
 concommand.Add( "fl_noclip" , FLRPNoclip )
 concommand.Add( "fl_cloak" , FLRPCloak )
 concommand.Add( "fl_bring" , FLRPBring )
 concommand.Add( "fl_goto" , FLRPGoto )
 concommand.Add( "fl_notarget" , FLRPNoTarget )
+concommand.Add( "fl_kick" , FLRPKick )
+--concommand.Add( "fl_ban" , FLRPBan )
 
 concommand.Add( "fl_check" , function( ply, command, args )
-  ply:ChatPrint(ply:GetUserGroup())
+  local target = FindPlayer( args[1], ply )
+
+  ply:ChatPrint(util.TypeToString(flrp.config.usergroup.immunity["" .. target:GetUserGroup() .. ""]))
 end )
 
 hook.Add( "PostPlayerDeath", "FLRPAdminDeath", function( ply )

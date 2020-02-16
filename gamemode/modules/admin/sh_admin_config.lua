@@ -6,11 +6,12 @@
   teleport - права на телепорт игроков
   nologs - права на полную анонимность админки
   viewlog - права видеть админ. действия администраторов в чате
+  kick - права для кика с сервера
   setrank - права на выдачу групп
 */
 
 flrp.config.usergroup = {
-  ["user"] = {
+  ["admin"] = {
     "noclip",
     "godmode",
     "viewlog",
@@ -18,14 +19,7 @@ flrp.config.usergroup = {
     "setnotarget",
     "playerpickup",
     "teleport",
-  },
-
-  ["admin"] = {
-    "noclip",
-    "godmode",
-    "viewlog",
-    "setrank",
-    "playerpickup",
+    "kick",
   },
 }
 

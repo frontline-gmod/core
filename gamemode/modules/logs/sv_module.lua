@@ -9,7 +9,7 @@ logs = {
   config = {
     --Задержка перед загрузкой логов в базу данных (в секундах)
     delay = 2,
-    debug = true
+    debug = false
   },
   -- Массив из собранных данных за время logs.config.delay
   bag = {}
