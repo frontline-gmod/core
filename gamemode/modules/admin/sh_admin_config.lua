@@ -9,9 +9,12 @@
   kick - права для кика с сервера
   ban - права на бан игроков
   setrank - права на выдачу групп
+  property - права на использование проперти (поджечь, удалить и т.п)
+  spawnmenu - права на использование C меню и Q menu
 */
 
 flrp.config.usergroup = {
+  ["user"] = {},
   ["admin"] = {
     "noclip",
     "godmode",

@@ -1,10 +1,10 @@
 require( "mysqloo" )
 
 DataBase = mysqloo.connect(
-  "remotemysql.com", -- IP DATABASE
-  "tGx32wrUUE", -- LOGIN DATABASE
-  "8ITB4AdBsL", -- PASSWORD DATABASE
-  "tGx32wrUUE", -- NAME DATABASE
+  "db4free.net", -- IP DATABASE
+  "flrp_db", -- LOGIN DATABASE
+  "seregatawer", -- PASSWORD DATABASE
+  "flrp_db", -- NAME DATABASE
   3306 -- PORT DATABASE
 )
 

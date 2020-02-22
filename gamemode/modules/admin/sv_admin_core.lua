@@ -17,15 +17,8 @@ function CheckAdminImmunity( ply, target )
   if IsValid(ply) then if flrp.config.usergroup.immunity["" .. ply:GetUserGroup() .. ""] >= flrp.config.usergroup.immunity["" .. target:GetUserGroup() .. ""] then return true else return false end end
 end
 
-function IsConsole( ply )
-  if (type(ply) == "Entity" and !IsValid(ply) and (ply.EntIndex and ply:EntIndex() == 0)) then return true end
-  return false
-end
-
 function FindPlayer(identifier, user)
-	if (!identifier) then
-		return
-	end
+	if (!identifier) then return end
 
 	local output = {}
 
