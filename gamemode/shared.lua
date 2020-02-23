@@ -1,6 +1,7 @@
 flrp = flrp || {}
 flrp.including = flrp.including || {}
 flrp.config = flrp.config || {}
+flrp.banlist = flrp.banlist || {}
 
 GM = GM or GAMEMODE
 GAMEMODE = GM or GAMEMODE
