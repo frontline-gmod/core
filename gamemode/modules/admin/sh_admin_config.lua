@@ -13,7 +13,7 @@
   spawnmenu - права на использование C меню и Q menu
 */
 
-flrp.config.usergroup = {
+flrp.config.usergroup = { -- все доступные юзер группы сервера
   ["user"] = {},
   ["admin"] = {
     "noclip",
@@ -28,11 +28,15 @@ flrp.config.usergroup = {
   },
 }
 
-flrp.config.usergroup.immunity = {
+flrp.config.usergroup.immunity = { -- иммунитет у юзер групп
   ["user"] = 25,
   ["admin"] = 70,
 }
 
-flrp.config.admin_core_settings = {
+flrp.config.usergroup.lenght = { -- максимальный срок блокировки у юзер групп
+  ["admin"] = 1440,
+}
+
+flrp.config.admin_core_settings = { -- доп настройки
   ["EnableCloakWithNoclip"] = true,
 }
