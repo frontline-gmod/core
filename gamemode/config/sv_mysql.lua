@@ -1,15 +1,20 @@
 require( "mysqloo" )
 
 DataBase = mysqloo.connect(
-  "db4free.net", -- IP DATABASE
-  "flrp_db", -- LOGIN DATABASE
-  "seregatawer", -- PASSWORD DATABASE
-  "flrp_db", -- NAME DATABASE
+  "localhost", -- IP DATABASE
+  "root", -- LOGIN DATABASE
+  "", -- PASSWORD DATABASE
+  "fl_gamemode", -- NAME DATABASE
   3306 -- PORT DATABASE
 )
 
 
 function DataBase:onConnected()
+
+    database.orm.get("bans", function(result)
+      table.Empty(flrp.banlist)
+    	table.insert(flrp.banlist, result[1])
+    end)
 
     print( "[FL]Database has connected!" )
 
