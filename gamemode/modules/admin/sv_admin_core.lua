@@ -265,6 +265,7 @@ function FLRPUnBan ( ply, command, args )
       else
         ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы указали не STEAMID64!' )" )
       end
+    end
   end
 
 end
@@ -277,7 +278,7 @@ concommand.Add( "fl_goto" , FLRPGoto )
 concommand.Add( "fl_notarget" , FLRPNoTarget )
 concommand.Add( "fl_kick" , FLRPKick )
 concommand.Add( "fl_ban" , FLRPBan )
-concommand.Add( "fl_unban", FLRPUnBan)
+concommand.Add( "fl_unban", FLRPUnBan )
 
 concommand.Add( "fl_check" , function( ply, command, args )
   local target = FindPlayer( args[1], ply )
