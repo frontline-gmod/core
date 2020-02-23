@@ -1,20 +1,20 @@
 function GetAdminUsergroup( usergroup )
-  if flrp.config.usergroup["" .. usergroup .. ""] then return true else return false end
+  if flrp.config.usergroup[usergroup ] then return true else return false end
 end
 
 function GetAdminPermission( ply, permission )
   if (type(ply) == "Entity" and !IsValid(ply) and (ply.EntIndex and ply:EntIndex() == 0)) then return true end
-  if IsValid(ply) then return table.HasValue(flrp.config.usergroup["" .. ply:GetUserGroup() .. ""], permission) end
+  if IsValid(ply) then return table.HasValue(flrp.config.usergroup[ply:GetUserGroup()], permission) end
 end
 
 function GetAdminImmunity( ply )
   if (type(ply) == "Entity" and !IsValid(ply) and (ply.EntIndex and ply:EntIndex() == 0)) then return true end
-  if IsValid(ply) then return flrp.config.usergroup.immunity["" .. ply:GetUserGroup() .. ""] end
+  if IsValid(ply) then return flrp.config.usergroup.immunity[ply:GetUserGroup()] end
 end
 
 function CheckAdminImmunity( ply, target )
   if (type(ply) == "Entity" and !IsValid(ply) and (ply.EntIndex and ply:EntIndex() == 0)) then return true end
-  if IsValid(ply) then if flrp.config.usergroup.immunity["" .. ply:GetUserGroup() .. ""] >= flrp.config.usergroup.immunity["" .. target:GetUserGroup() .. ""] then return true else return false end end
+  if IsValid(ply) then if flrp.config.usergroup.immunity[ply:GetUserGroup()] >= flrp.config.usergroup.immunity[target:GetUserGroup()] then return true else return false end end
 end
 
 function IsConsole( ply )
@@ -245,6 +245,30 @@ function FLRPBan ( ply, command, args )
 
 end
 
+function FLRPUnBan ( ply, command, args )
+
+  local target = table.concat(args, " ", 1, 1)
+
+  if GetAdminPermission( ply, "unban" ) then
+    for k,v in pairs (flrp.banlist) do
+      if flrp.banlist[k].steamid64 == target then
+        table.RemoveByValue( flrp.banlist, flrp.banlist[k])
+        database.orm.delete("bans",
+        {
+          steamid64 = target
+        })
+        for k, v in pairs(player.GetAll()) do
+          v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), '" .. util.TypeToString(target:Name()) .. " был разблокирован ".. util.TypeToString(ply:Name()) .." ')" )
+        end
+      elseif isnumber(target) then
+        ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' STEAMID64 не найден в списках заблокированных!' )" )
+      else
+        ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы указали не STEAMID64!' )" )
+      end
+  end
+
+end
+
 concommand.Add( "fl_setrank" , FLRPSetRank )
 concommand.Add( "fl_noclip" , FLRPNoclip )
 concommand.Add( "fl_cloak" , FLRPCloak )
@@ -253,12 +277,13 @@ concommand.Add( "fl_goto" , FLRPGoto )
 concommand.Add( "fl_notarget" , FLRPNoTarget )
 concommand.Add( "fl_kick" , FLRPKick )
 concommand.Add( "fl_ban" , FLRPBan )
+concommand.Add( "fl_unban", FLRPUnBan)
 
 concommand.Add( "fl_check" , function( ply, command, args )
   local target = FindPlayer( args[1], ply )
 
   if IsValid(target) then
-    ply:ChatPrint(util.TypeToString(flrp.config.usergroup.immunity["" .. target:GetUserGroup() .. ""]))
+    ply:ChatPrint(util.TypeToString(flrp.config.usergroup.immunity[target:GetUserGroup()]))
   end
 end )
 
