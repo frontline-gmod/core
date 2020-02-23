@@ -1,4 +1,5 @@
 function GM:PlayerSpawn( ply )
+  if ply:Team() == 1001 then ply:SetPos(Vector(-905.630432, 4.803902, -12703.968750)) end
 
   hook.Call( "PlayerLoadout", GAMEMODE, ply )
 end

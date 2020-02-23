@@ -5,6 +5,7 @@ TEAM_DOB = flrp.jobs.add_job("Новобранец", {
 	Weapons = {"weapon_crowbar"},
 	PlayerSpawn = function(ply)
 		ply:SetArmor(100)
+		ply:SetPos(Vector(172.982941, 272.901672, -12223.968750))
 	end
 })
 
