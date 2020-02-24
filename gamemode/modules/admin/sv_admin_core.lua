@@ -224,7 +224,6 @@ function FLRPBan ( ply, command, args )
   if GetAdminPermission( ply, "ban" ) && IsValid(target) then
     if CheckAdminImmunity( ply, target ) then
       if flrp.config.usergroup.lenght[ply:GetUserGroup()] >= tonumber(length) then
-        PrintTable(flrp.banlist)
         local insertbanTable = {
           steamid64 = target:SteamID64(),
           ip = target:IPAddress(),
@@ -238,7 +237,6 @@ function FLRPBan ( ply, command, args )
           date = os.time() + (length*60),
         })
         table.insert( flrp.banlist[1], insertbanTable )
-        PrintTable(flrp.banlist)
         target:Kick(reason_ban)
         for k, v in pairs(player.GetAll()) do
           v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), '" .. util.TypeToString(target:Name()) .. " был заблокирован ".. util.TypeToString(ply:Name()) .." по причине: ".. util.TypeToString(reason_ban) .." сроком на " .. util.TypeToString(tostring(length+0)) .. " минут(ы)')" )

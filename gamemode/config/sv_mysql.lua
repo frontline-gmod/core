@@ -12,7 +12,6 @@ DataBase = mysqloo.connect(
 function DataBase:onConnected()
 
     database.orm.get("bans", function(result)
-      PrintTable(result)
       table.Empty(flrp.banlist)
     	table.insert(flrp.banlist, result)
     end)
