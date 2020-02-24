@@ -1,8 +1,9 @@
 hook.Add("CheckPassword", "frontline_player_checkbanned", function( steamid64_suspect )
+	PrintTable(flrp.banlist)
 	for k,v in pairs (flrp.banlist) do
 		if flrp.banlist[k].steamid64 == steamid64_suspect then
 			if os.time() <= tonumber(flrp.banlist[k].date) then
-				return false, string.format( "Вы заблокированы на нашем проекте.\n\nПричина блокировки: " .. flrp.banlist[k].reason .. "\nРазблокировка: " .. os.date( "%H:%M:%S - %d/%m/%Y", flrp.banlist[k].date ) .. "" )
+				return false, string.format( "Вы заблокированы на нашем проекте.\n\nПричина блокировки: %s\nРазблокировка: %s", flrp.banlist[k].reason, os.date( "%H:%M:%S - %d/%m/%Y", flrp.banlist[k].date ) )
 			else
 				database.orm.delete("bans", {
 					steamid64 = steamid64_suspect
