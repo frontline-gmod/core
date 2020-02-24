@@ -1,14 +1,15 @@
 hook.Add("CheckPassword", "frontline_player_checkbanned", function( steamid64_suspect )
-	PrintTable(flrp.banlist)
-	for k,v in pairs (flrp.banlist) do
-		if flrp.banlist[k].steamid64 == steamid64_suspect then
-			if os.time() <= tonumber(flrp.banlist[k].date) then
-				return false, string.format( "Вы заблокированы на нашем проекте.\n\nПричина блокировки: %s\nРазблокировка: %s", flrp.banlist[k].reason, os.date( "%H:%M:%S - %d/%m/%Y", flrp.banlist[k].date ) )
+	for k,v in pairs (flrp.banlist[1]) do
+		if flrp.banlist[1][k].steamid64 == steamid64_suspect then
+			if tonumber(flrp.banlist[1][k].date) == 0 then
+				return false, string.format( "Вы заблокированы на нашем проекте.\n\nПричина блокировки: %s\nБлокировка пермаментная и разжалованию не подлежит.\nЗемля тебе аналом, братишка!", flrp.banlist[1][k].reason )
+			elseif os.time() <= tonumber(flrp.banlist[1][k].date) then
+				return false, string.format( "Вы заблокированы на нашем проекте.\n\nПричина блокировки: %s\nРазблокировка: %s", flrp.banlist[1][k].reason, os.date( "%H:%M:%S - %d/%m/%Y", flrp.banlist[1][k].date ) )
 			else
 				database.orm.delete("bans", {
 					steamid64 = steamid64_suspect
 				})
-				table.RemoveByValue(flrp.banlist, flrp.banlist[k])
+				table.RemoveByValue(flrp.banlist, flrp.banlist[1][k])
 			end
 		end
 	end

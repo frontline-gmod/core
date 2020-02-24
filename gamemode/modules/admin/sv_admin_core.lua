@@ -223,7 +223,7 @@ function FLRPBan ( ply, command, args )
 
   if GetAdminPermission( ply, "ban" ) && IsValid(target) then
     if CheckAdminImmunity( ply, target ) then
-      if flrp.config.usergroup.lenght[ply:GetUserGroup()] >= tonumber(length) then
+      if flrp.config.usergroup.lenght[ply:GetUserGroup()] >= length && length > 0 then
         local insertbanTable = {
           steamid64 = target:SteamID64(),
           ip = target:IPAddress(),
@@ -241,6 +241,29 @@ function FLRPBan ( ply, command, args )
         for k, v in pairs(player.GetAll()) do
           v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), '" .. util.TypeToString(target:Name()) .. " был заблокирован ".. util.TypeToString(ply:Name()) .." по причине: ".. util.TypeToString(reason_ban) .." сроком на " .. util.TypeToString(tostring(length+0)) .. " минут(ы)')" )
         end
+      elseif length == 0 then
+        if GetAdminPermission( ply, "perm" ) then
+          local insertbanTable = {
+            steamid64 = target:SteamID64(),
+            ip = target:IPAddress(),
+            reason = reason_ban,
+            date = 0,
+          }
+          database.orm.insert("bans", {
+            steamid64 = target:SteamID64(),
+            ip = target:IPAddress(),
+            reason = reason_ban,
+            date = 0,
+          })
+          table.insert( flrp.banlist[1], insertbanTable )
+          target:Kick(reason_ban)
+          for k, v in pairs(player.GetAll()) do
+            v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), '" .. util.TypeToString(target:Name()) .. " был заблокирован ".. util.TypeToString(ply:Name()) .." пермаментно по причине: ".. util.TypeToString(reason_ban) .."')" )
+          end
+        else
+          ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Слишком большой срок для вашей привилегии!' )" )
+          ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' У вас нет прав на блокировку пермаментом!' )" )
+        end
       else
         ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Слишком большой срок для вашей привилегии!' )" )
         ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Ваш текущий максимальный срок блокировки: ".. flrp.config.usergroup.lenght["" .. ply:GetUserGroup() .. ""] .. " минут' )" )
@@ -254,23 +277,19 @@ end
 
 function FLRPUnBan ( ply, command, args )
 
-  local target = table.concat(args, " ", 1, 1)
+  local target = table.concat(args, 1, 1)
 
   if GetAdminPermission( ply, "unban" ) then
-    for k,v in pairs (flrp.banlist) do
-      if flrp.banlist[k].steamid64 == target then
-        table.RemoveByValue( flrp.banlist, flrp.banlist[k])
+    for k,v in pairs (flrp.banlist[1]) do
+      if flrp.banlist[1][k].steamid64 == target then
+        table.RemoveByValue( flrp.banlist, flrp.banlist[1][k])
         database.orm.delete("bans",
         {
           steamid64 = target
         })
         for k, v in pairs(player.GetAll()) do
-          v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), '" .. util.TypeToString(target:Name()) .. " был разблокирован ".. util.TypeToString(ply:Name()) .." ')" )
+          v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), '" .. util.TypeToString(target) .. " был разблокирован ".. util.TypeToString(ply:Name()) .." ')" )
         end
-      elseif isnumber(target) then
-        ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' STEAMID64 не найден в списках заблокированных!' )" )
-      else
-        ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы указали не STEAMID64!' )" )
       end
     end
   end
