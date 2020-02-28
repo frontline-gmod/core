@@ -26,6 +26,7 @@ function IsConsole( ply )
 end
 
 function FindPlayer(identifier, user)
+
 	if (!identifier) then return end
 
 	local output = {}
@@ -129,7 +130,7 @@ function FLRPCloak( ply )
 
 end
 
-function FLRPBring ( ply, command, args )
+function FLRPBring ( ply, target )
 
   local target = FindPlayer( args[1], ply )
 
@@ -147,7 +148,7 @@ function FLRPBring ( ply, command, args )
 
 end
 
-function FLRPGoto ( ply, command, args )
+function FLRPGoto ( ply, target )
 
   local target = FindPlayer( args[1], ply )
 
@@ -165,20 +166,18 @@ function FLRPGoto ( ply, command, args )
 
 end
 
-function FLRPNoTarget ( ply, command, args )
+function FLRPNoTarget ( ply, target )
 
-  local target = FindPlayer( args[1], ply )
-
-  if GetAdminPermission( ply, "setnotarget" ) && IsValid(target) then
+  if GetAdminPermission( ply, "notarget" ) && IsValid(target) then
     if CheckAdminImmunity( ply, target ) then
-      if target:GetFlags() != 65536 then
-        target:AddFlags(FL_NOTARGET)
-        ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы успешно выдали невидимку от НПСи!' )" )
-        target:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вам была выдана невидимка от НПСи администратором: " .. util.TypeToString(ply:Nick()) .. "' )" )
-      else
-        target:RemoveFlags(FL_NOTARGET)
+      if target:IsFlagSet(65536) then
+        target:RemoveFlags(65536)
         ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы успешно сняли невидимку от НПСи!' )" )
         target:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вам снял невидимку от НПСи администратор: " .. util.TypeToString(ply:Nick()) .. "' )" )
+      else
+        target:AddFlags(65536)
+        ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вы успешно выдали невидимку от НПСи игроку: " .. util.TypeToString(target:Nick()) .. "' )" )
+        target:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Вам была выдана невидимка от НПСи администратором: " .. util.TypeToString(ply:Nick()) .. "' )" )
       end
     else
       ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Ваш иммунитет меньше, чем у цели!' )" )
@@ -187,18 +186,15 @@ function FLRPNoTarget ( ply, command, args )
 
 end
 
-function FLRPKick ( ply, command, args )
+function FLRPKick ( ply, target, reason_kick )
 
-  local target = FindPlayer( args[1], ply )
-  local reason = table.concat(args, " ", 2)
-
-  if reason == "" || nil then reason = "Без причины" end
+  if reason_kick == "" || nil then reason_kick = "Без причины" end
 
   if GetAdminPermission( ply, "kick" ) && IsValid(target) then
     if CheckAdminImmunity( ply, target ) then
-      target:Kick(reason)
+      target:Kick(reason_kick)
       for k, v in pairs(player.GetAll()) do
-        v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), '" .. util.TypeToString(target:Name()) .. " был кикнут ".. util.TypeToString(ply:Name()) .." по причине: ".. util.TypeToString(reason) .."')" )
+        v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), '" .. util.TypeToString(target:Name()) .. " был кикнут ".. util.TypeToString(ply:Name()) .." по причине: ".. util.TypeToString(reason_kick) .."')" )
       end
     else
       ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Ваш иммунитет меньше, чем у цели!' )" )
@@ -207,15 +203,13 @@ function FLRPKick ( ply, command, args )
 
 end
 
-function FLRPBan ( ply, command, args )
+function FLRPBan ( ply, target, lenght, reason_ban )
 
-  local target = FindPlayer( args[1], ply )
-  local length = tonumber(table.concat(args, " ", 2, 2))
-  local reason_ban = table.concat(args, " ", 3, 3)
+  local maxlenght = tonumber(flrp.config.usergroup.lenght[ply:GetUserGroup()])
 
   if reason_ban == nil then reason_ban = "Без причины" end
 
-  if !isnumber(length) || (length+0) == nil then
+  if isstring(lenght) then
     ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), 'Вы указали не правильный срок!' )" )
     ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), 'Время указывается в минутах.' )" )
     return
@@ -223,25 +217,25 @@ function FLRPBan ( ply, command, args )
 
   if GetAdminPermission( ply, "ban" ) && IsValid(target) then
     if CheckAdminImmunity( ply, target ) then
-      if flrp.config.usergroup.lenght[ply:GetUserGroup()] >= length && length > 0 then
+      if maxlenght >= lenght && lenght > 0 then
         local insertbanTable = {
           steamid64 = target:SteamID64(),
           ip = target:IPAddress(),
           reason = reason_ban,
-          date = os.time() + (length*60),
+          date = os.time() + (lenght*60),
         }
         database.orm.insert("bans", {
           steamid64 = target:SteamID64(),
           ip = target:IPAddress(),
           reason = reason_ban,
-          date = os.time() + (length*60),
+          date = os.time() + (lenght*60),
         })
         table.insert( flrp.banlist[1], insertbanTable )
         target:Kick(reason_ban)
         for k, v in pairs(player.GetAll()) do
-          v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), '" .. util.TypeToString(target:Name()) .. " был заблокирован ".. util.TypeToString(ply:Name()) .." по причине: ".. util.TypeToString(reason_ban) .." сроком на " .. util.TypeToString(tostring(length+0)) .. " минут(ы)')" )
+          v:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), '" .. util.TypeToString(target:Name()) .. " был заблокирован ".. util.TypeToString(ply:Name()) .." по причине: ".. util.TypeToString(reason_ban) .." сроком на " .. util.TypeToString(tostring(lenght+0)) .. " минут(ы)')" )
         end
-      elseif length == 0 then
+      elseif lenght == 0 then
         if GetAdminPermission( ply, "perm" ) then
           local insertbanTable = {
             steamid64 = target:SteamID64(),
@@ -266,7 +260,7 @@ function FLRPBan ( ply, command, args )
         end
       else
         ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Слишком большой срок для вашей привилегии!' )" )
-        ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Ваш текущий максимальный срок блокировки: ".. flrp.config.usergroup.lenght["" .. ply:GetUserGroup() .. ""] .. " минут' )" )
+        ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Ваш текущий максимальный срок блокировки: ".. maxlenght .. " минут' )" )
       end
     else
       ply:SendLua( "chat.AddText( Color( 0, 183, 91 ), '[FL ADMIN] ', Color( 235, 235, 235 ), ' Ваш иммунитет меньше, чем у цели!' )" )
@@ -302,8 +296,6 @@ concommand.Add( "fl_cloak" , FLRPCloak )
 concommand.Add( "fl_bring" , FLRPBring )
 concommand.Add( "fl_goto" , FLRPGoto )
 concommand.Add( "fl_notarget" , FLRPNoTarget )
-concommand.Add( "fl_kick" , FLRPKick )
-concommand.Add( "fl_ban" , FLRPBan )
 concommand.Add( "fl_unban", FLRPUnBan )
 
 concommand.Add( "fl_check" , function( ply, command, args )

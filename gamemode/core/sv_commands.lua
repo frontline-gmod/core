@@ -1,31 +1,68 @@
 util.AddNetworkString( "OpenBanMenu" )
 
 hook.Add("PlayerSay", "FLRPAdminCommands", function( ply, text )
-	if GetAdminUsergroup(ply:GetUserGroup()) then
-		if ( string.sub( string.lower( text ), 1, 7 ) == "!noclip" ) then
-			ply:ConCommand( "fl_noclip" )
+	local text_args = string.Explode( " ", text )
+
+	if GetAdminUsergroup( ply:GetUserGroup() ) then
+		if GetAdminPermission( ply, "noclip" ) then
+			if text_args[1] == "!noclip" then
+				FLRPGoto( ply, target )
+			end
 		end
-		if ( string.sub( string.lower( text ), 1, 6 ) == "!cloak" ) then
-			ply:ConCommand( "fl_cloak" )
+		if GetAdminPermission( ply, "cloak" ) then
+			if text_args[1] == "!cloak" then
+				FLRPNoTarget( ply, target )
+			end
 		end
-		if ( string.sub( string.lower( text ), 1, 5 ) == "!goto" ) then
-			ply:ConCommand( "fl_goto" .. string.sub( text, 6 ) )
+		if GetAdminPermission( ply, "teleport" ) then
+			if text_args[1] == "!goto" then
+				local target = FindPlayer( text_args[2], ply )
+				if IsValid(target) then
+					FLRPGoto( ply, target )
+				end
+			end
+			if text_args[1] == "!bring" then
+				local target = FindPlayer( text_args[2], ply )
+				if IsValid(target) then
+					FLRPBring( ply, target )
+				end
+			end
 		end
-		if ( string.sub( string.lower( text ), 1, 6 ) == "!bring" ) then
-			ply:ConCommand( "fl_bring" .. string.sub( text, 7 ) )
+		if GetAdminPermission( ply, "notarget" ) then
+			if text_args[1] == "!notarget" then
+				local target = FindPlayer( text_args[2], ply )
+				if IsValid(target) then
+					FLRPNoTarget( ply, target )
+				end
+			end
 		end
-		if ( string.sub( string.lower( text ), 1, 9 ) == "!notarget" ) then
-			ply:ConCommand( "fl_notarget" .. string.sub( text, 10 ) )
+		if GetAdminPermission( ply, "kick" ) then
+			if text_args[1] == "!kick" then
+				local target = FindPlayer( text_args[2], ply )
+				local reason_kick = table.concat( text_args, " ", 3, #text_args )
+				PrintTable( text_args )
+				print(#text_args)
+				if IsValid(target) then
+					FLRPKick( ply, target, reason_kick )
+				end
+			end
 		end
-		if ( string.sub( string.lower( text ), 1, 4 ) == "!ban" ) then
-			if IsValid(FindPlayer(string.sub( text, 6 ), ply)) then
-				return
+		if GetAdminPermission( ply, "ban" ) then
+			if text_args[1] == "!ban" then
+				local target = FindPlayer( text_args[2], ply )
+				local length = tonumber( text_args[3] )
+				local reason_ban = table.concat( text_args, " ", 4, #text_args )
+				if IsValid(target) then
+					FLRPBan( ply, target, length, reason_ban )
+				end
 			end
 		end
     if flrp.config.enable_secondary_modules["Whitelist"] == true then
-      if ( string.sub( string.lower( text ), 1, 10 ) == "!whitelist" ) then
-        ply:ConCommand( "fl_whitelist" )
-      end
+			if GetAdminPermission( ply, "whitelist" ) then
+	      if text_args[1] == "!whitelist" then
+					-- тело
+				end
+			end
     end
 	end
 end)
