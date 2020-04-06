@@ -44,6 +44,7 @@ local libs_isload
 if !libs_isload then
 	flrp.including.include_sh 'libs/pon.lua'
 	flrp.including.include_sh 'libs/netstream.lua'
+	flrp.including.include_sh 'libs/nw.lua'
 	flrp.including.include_cl 'libs/cl_fonts.lua'
 
 	flrp.including.include_sh 'libs/sh_include_xeninui.lua'
@@ -58,19 +59,23 @@ flrp.including.include_cl 'modules/ui/cl_hud.lua'
 flrp.including.include_sh 'modules/roleplay/sh_roleplay_config.lua'
 
 flrp.including.include_sh 'modules/admin/sh_admin_config.lua'
+flrp.including.include_sh 'modules/admin/sh_admin_meta.lua'
 flrp.including.include_sv 'modules/admin/sv_admin_core.lua'
+flrp.including.include_cl 'modules/admin/cl_banlist_menu.lua'
+flrp.including.include_sv 'modules/admin/sv_banlist_menu.lua'
 
 flrp.including.include_sv 'modules/database/sv_module.lua'
 flrp.including.include_sv 'modules/database/sv_entity_manager.lua'
 flrp.including.include_sv 'modules/database/sv_hooks.lua'
 
-flrp.including.include_sh 'modules/logs/sv_module.lua'
-flrp.including.include_sv 'modules/logs/sv_hooks.lua'
+flrp.including.include_cl 'modules/logs/cl_logs_menu.lua'
+flrp.including.include_sv 'modules/logs/sv_logs.lua'
 
 flrp.including.include_sh 'modules/whitelist/sh_whitelist.lua'
 
 flrp.including.include_sh 'modules/jobs/sh_jobs.lua'
 flrp.including.include_sh 'modules/jobs/sh_jobs_list.lua'
+flrp.including.include_sh 'modules/jobs/sh_nofrindlyfire_config.lua'
 
 flrp.including.include_sh 'modules/player_class/sh_standart_class.lua'
 flrp.including.include_sh 'modules/player_class/sh_roleplay_class.lua'

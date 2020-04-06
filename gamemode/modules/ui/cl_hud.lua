@@ -1,84 +1,51 @@
-print("[FL]Hud Loading!")
+hook.Add("HUDPaint", "FLRPHud", function()
+  local ply = LocalPlayer()
+  local max_health = ply:GetMaxHealth()
+  local health = ply:Health() || 0
+  local armor = ply:Armor() || 0
 
-function HUDHide_FLRP ( flrphud )
-	for _, v in pairs{ "CHudHealth", "CHudBattery", "CHudAmmo", "CHudSecondaryAmmo", "CHudDeathNotice", "CHudHintDisplay" } do
-		if flrphud == v then return false end
-	end
-end
+  if !ply:Alive() then return false end
+  if health > 100 then health = 100 end
+  if armor > 100 then armor = 100 end
 
-function draw.ShadowSimpleText( text, font, x, y, color, xalign, yalign, sh, color_shadow )
-	local sh = sh or 1
-	draw.SimpleText(text, font, x+sh, y+sh, color_shadow or Color(0,0,0,190), xalign, yalign)
-	draw.SimpleText(text, font, x, y, color, xalign, yalign)
-end
+  draw.RoundedBox(1, 27, ScrH()-48, math.Clamp(health, 0, 100)*4, 30, Color(205, 38, 38, 255))
+  surface.SetDrawColor( Color( 235, 235, 235, 200 ) )
+	surface.DrawOutlinedRect( 27, ScrH()-48, math.Clamp(health, 0, 100)*4, 30 )
 
-hook.Add("HUDShouldDraw","HUDHide_FLRP",HUDHide_FLRP)
+  if armor > 0 then
+    draw.RoundedBox(1, 27, ScrH()-28, math.Clamp(armor, 0, 100)*4, 10, Color(16, 78, 139, 255))
+    surface.SetDrawColor( Color( 235, 235, 235, 200 ) )
+  	surface.DrawOutlinedRect( 27, ScrH()-28, math.Clamp(armor, 0, 100)*4, 10 )
+  end
 
-local x = 15
-local y = ScrH() - 150
-local scrdw = ScrW()
+  if IsValid(ply:GetActiveWeapon()) then
+    local weapon_clip = ply:GetActiveWeapon():Clip1() or 0
+    local weapon_max_clip = ply:GetActiveWeapon():GetMaxClip1() or 0
 
-local function FLRP_hud()
+    if weapon_clip > 999 then weapon_clip = 999 end
 
-	local ply = LocalPlayer()
-	local hp = ply:Health() or 0
-	local maxhp = ply:GetMaxHealth() or 0
-	local arm = ply:Armor() or 0
+    if (weapon_clip > 0 && weapon_max_clip > 0) then
+      draw.SimpleText(ply:GetActiveWeapon():Clip1(), "font_base_big", ScrW()-210, ScrH()-88, Color(255,255,255), TEXT_ALIGN_RIGHT)
+      draw.SimpleText("\\", "font_base_big", ScrW()-210, ScrH()-100, Color(255,255,255))
+      draw.SimpleText(ply:GetActiveWeapon():GetMaxClip1(), "font_base_big", ScrW()-199, ScrH()-112, Color(255,255,255), TEXT_ALIGN_LEFT)
+    end
+  end
+end)
 
-	if ( !ply:Alive() ) then return end
+hook.Add("HUDDrawTargetID", "FLRPHudDrawTargetID", function() return false end)
 
-	local heart = Material("materials/like.png")
-	local armor = Material("materials/vest.png")
-	local compass = Material("materials/compass.png")
-	local timer = Material("materials/clock.png")
-	local radio = Material("materials/radio.png")
+hook.Add("PostPlayerDraw", "FLRP3D2DHUDPlayer", function( ply )
+ 	if !IsValid( ply ) then return end
+ 	if ply == LocalPlayer() then return end
+ 	if !ply:Alive() then return end
 
-	--Health
-	surface.SetMaterial(heart)
-	surface.SetDrawColor(255,255,255,255)
-	surface.DrawTexturedRect(10, (ScrH() - 150) + 108 , 30, 30)
-	draw.RoundedBox(2,50,(ScrH() - 150) + 114,125,16,Color(30,30,40,150))
+ 	local distance = LocalPlayer():GetPos():Distance( ply:GetPos() )
 
-	if hp <= 100 then
-		draw.RoundedBox(1, 50 , (ScrH() - 150) + 114, math.Clamp(hp, 0, 100)*1.25, 16, Color(10, 120, 10, 255) )
-	 elseif hp > 100 then
-		draw.RoundedBox(1, 50 , (ScrH() - 150) + 114, 125, 16, Color(10, 120, 10, 255) )
-	 end
-	surface.SetDrawColor( Color( 10, 10, 10, 200 ) )
-	surface.DrawOutlinedRect( 50 , (ScrH() - 150) + 114, 125, 17 )
-	draw.ShadowSimpleText( hp, "TargetID",140, (ScrH() - 150) + 114, Color(255,255,255,255) )
-
-	--Armor
-	if arm ~= 0 then
-		surface.SetMaterial(armor)
-		surface.SetDrawColor(255,255,255,255)
-		surface.DrawTexturedRect(207, (ScrH() - 150) + 105, 30, 30)
-		draw.RoundedBox(2,250,(ScrH() - 150) + 114,125,16,Color(30,30,40,150))
-		if arm <= 100 then
-		  draw.RoundedBox(1, 250 , (ScrH() - 150) + 114, math.Clamp(arm, 0, 255)*1.25, 16, Color(10, 10, 200, 255) )
-		elseif arm > 100 then
-		  draw.RoundedBox(1, 250 , (ScrH() - 150) + 114, 125, 16, Color(20, 20, 200, 255) )
-		end
-		surface.SetDrawColor( Color( 10, 10, 10, 200 ) )
-		surface.DrawOutlinedRect( 250 , (ScrH() - 150) + 114, 125, 17 )
-		draw.ShadowSimpleText( arm, "TargetID",340, (ScrH() - 150) + 114, Color(255,255,255,255) )
-	end
-
- end
-
-local function FLRPHudPlayers( ply )
-
- 	if ( !IsValid( ply ) ) then return end
- 	if ( ply == LocalPlayer() ) then return end
- 	if ( !ply:Alive() ) then return end
-
- 	local Distance = LocalPlayer():GetPos():Distance( ply:GetPos() )
-
- 	if ( Distance < 500 ) then
-
+ 	if ( distance < 500 ) then
  		local offset = Vector( -3, 0, 85 )
  		local ang = LocalPlayer():EyeAngles()
 		local pos = ply:GetPos() + offset + ang:Up()
+
    	local team_color = team.GetColor()
 
  		ang:RotateAroundAxis( ang:Forward(), 90 )
@@ -86,22 +53,27 @@ local function FLRPHudPlayers( ply )
 
  		cam.Start3D2D( pos, Angle( 0, ang.y, 90 ), 0.02 )
 
- 		draw.DrawText( ply:GetName(), "font_base_3d2d", -4 , 650/2, team.GetColor(ply:Team()), TEXT_ALIGN_CENTER )
-    if flrp.config.enable_primary_module == "Roleplay" then
-      draw.DrawText( team.GetName(ply:Team()), "font_base_3d2d", -4 , 900/2, Color(255,255,255), TEXT_ALIGN_CENTER )
-    end
+   		draw.DrawText( ply:GetName(), "font_base_3d2d", -75 , 650/2, team.GetColor(ply:Team()), TEXT_ALIGN_CENTER )
+    	draw.DrawText( team.GetName(ply:Team()), "font_base_3d2d", -75 , 900/2, Color(255,255,255), TEXT_ALIGN_CENTER )
 
  		cam.End3D2D()
-
  	end
+end)
 
-end
+hook.Add("HUDShouldDraw", "FLRPHideHUD", function( element )
+  local hide_elements = {
+    ["CHudHealth"] = true,
+    ["CHudBattery"] = true,
+    ["CHudAmmo"] = true,
+    ["CHudSecondaryAmmo"] = true,
+    ["CHudDeathNotice"] = true,
+    ["CHudZoom"] = true,
+    ["CHudHintDisplay"] = true,
+  }
 
-hook.Add("HUDPaint", "FLRP_HUD", FLRP_hud)
-hook.Add("PostPlayerDraw", "FLRPHudPlayers", FLRPHudPlayers)
+  if hide_elements[element] then return false end
+end)
 
-if flrp.config.enable_primary_module == "Roleplay" then
-  hook.Add("HUDDrawTargetID", "FLRPTargetName", function() return false end)
-  hook.Add("DrawDeathNotice", "FLRPDeathNoticee", function() return 0,0 end)
-  hook.Add("Initialize", "FLRPDeathNotice", function() hook.Add("AddDeathNotice", "FLRPDeathNotice2", function() return end) end)
-end
+hook.Add("DrawDeathNotice", "FLRPHideDrawDeathNotice", function()
+	return 0, 0
+end)

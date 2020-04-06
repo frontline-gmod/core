@@ -1,6 +1,8 @@
 flrp.jobs = {}
+flrp.jobs.standart_job = TEAM_DOB
 
 local indexnumber = 1
+AccessorFunc( FindMetaTable("Player"), "rank_user", "RankName", FORCE_STRING )
 
 function flrp.jobs.add_job(name, job)
   indexnumber = indexnumber + 1
@@ -19,18 +21,5 @@ function flrp.jobs.add_job(name, job)
 	end
 
 	table.insert( flrp.jobs, indexnumber,  job )
-
 	return indexnumber
-end
-
-function flrp.FindJob(index)
-	return flrp.jobs[index] or false
-end
-
-function flrp.FindJobByID(strID)
-	for _, job in pairs(flrp.jobs) do
-		if job.jobID == strID then
-			return job
-		end
-	end
 end

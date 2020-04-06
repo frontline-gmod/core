@@ -16,6 +16,11 @@ function DataBase:onConnected()
     	table.insert(flrp.banlist, result)
     end)
 
+    database.orm.get("logs", function(result)
+      table.Empty(flrp.logs)
+    	table.insert(flrp.logs, result)
+    end)
+
     print( "[FL]Database has connected!" )
 
 end

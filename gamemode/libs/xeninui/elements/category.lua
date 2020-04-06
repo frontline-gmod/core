@@ -4,7 +4,7 @@
 	Credits goes to Metamist for his previously closed source library Wyvern,
 		CupCakeR for various improvements, the animated texture VGUI panel, and misc.
 ]]
- 
+
 XeninUI:CreateFont("XeninUI.Category.Title", 20)
 
 XENINUI_LAYOUT_GRID = 1
@@ -97,7 +97,7 @@ function PANEL:Init()
       surface.SetMaterial(self:GetIcon())
       surface.SetDrawColor(pnl.textColor)
       surface.DrawTexturedRect(self:GetIconOffset(), self:GetIconOffset(), iconSize, iconSize)
-      
+
       x = h
     end
 
@@ -172,7 +172,7 @@ function PANEL:SetLayoutType(type)
 
       for i, child in ipairs(children) do
         if (!IsValid(child)) then continue end
-      
+
         child:SetPos(border + x * innerWidth / count + spacingX * x, border + y * child:GetTall() + spacingY * y)
         child:SetSize(innerWidth / count, self:GetGridColumnHeight() or innerWidth / count)
 

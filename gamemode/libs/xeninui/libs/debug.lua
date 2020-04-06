@@ -4,7 +4,7 @@
 	Credits goes to Metamist for his previously closed source library Wyvern,
 		CupCakeR for various improvements, the animated texture VGUI panel, and misc.
 ]]
- 
+
 CreateClientConVar("xenin_debug_print_file_enabled", "1", true, false)
 CreateClientConVar("xenin_debug_print_console_enabled", "0", true, false)
 
@@ -26,13 +26,6 @@ function XeninUI:EnsureDebugFileExists()
 
   if (!file.IsDir(path, "DATA")) then
     file.CreateDir(path)
-  end
-
-  if (!file.Exists(realPath, "DATA")) then
-    local str = "Debug log for " .. ply:Nick() .. " [" .. ply:SteamID() .. "] initialised at " .. os.date("%d/%m/%Y %H:%M:%S", time) .. "\n"
-    file.Write(realPath, str)
-
-    ply.debug = realPath
   end
 end
 
@@ -93,7 +86,7 @@ function XeninUI:DebugQuery(prefix, secs)
   if (!prefix) then
     print("You need a category!")
 
-    return 
+    return
   end
 
   secs = secs or 300
@@ -101,7 +94,7 @@ function XeninUI:DebugQuery(prefix, secs)
   local ply = LocalPlayer()
   if (!ply.debugTbl) then
     print("No debug info at all")
-  
+
     return
   end
   if (!ply.debugTbl[prefix]) then
@@ -113,10 +106,10 @@ function XeninUI:DebugQuery(prefix, secs)
   local tbl = ply.debugTbl[prefix]
   local size = #tbl
 
-  if (size == 0) then 
+  if (size == 0) then
     print("The category exists, but there's no info")
 
-    return 
+    return
   end
 
   local curTime = CurTime() - secs

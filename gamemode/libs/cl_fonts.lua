@@ -3,7 +3,7 @@ surface.CreateFont( "font_base", {
 	size = 32,
 	weight = 0,
 	antialias = true,
-	underline = true,
+	underline = false,
 	extended = true,
 })
 
@@ -28,7 +28,7 @@ surface.CreateFont( "font_base_normal", {
 	size = 26,
 	weight = 0,
 	antialias = true,
-	underline = true,
+	underline = false,
 	extended = true,
 })
 
@@ -69,7 +69,7 @@ surface.CreateFont( "font_base_small", {
 	size = 14,
 	weight = 300,
 	antialias = true,
-	underline = true,
+	underline = false,
 	extended = true,
 })
 
@@ -78,7 +78,7 @@ surface.CreateFont( "font_base_12", {
 	size = 12,
 	weight = 0,
 	antialias = true,
-	underline = true,
+	underline = false,
 	extended = true,
 })
 
@@ -87,7 +87,7 @@ surface.CreateFont( "font_base_hud", {
 	size = 26,
 	weight = 0,
 	antialias = true,
-	underline = true,
+	underline = false,
 	extended = true,
 })
 
@@ -96,7 +96,7 @@ surface.CreateFont( "font_base_84", {
 	size = 84,
 	weight = 0,
 	antialias = true,
-	underline = true,
+	underline = false,
 	extended = true,
 })
 
@@ -105,7 +105,7 @@ surface.CreateFont( "font_base_54", {
 	size = 54,
 	weight = 0,
 	antialias = true,
-	underline = true,
+	underline = false,
 	extended = true,
 })
 
@@ -130,7 +130,7 @@ surface.CreateFont( "font_hud", {
 	size = 18,
 	weight = 300,
 	antialias = true,
-	underline = true,
+	underline = false,
 	extended = true,
 })
 
@@ -139,7 +139,7 @@ surface.CreateFont( "font_hud_header", {
 	size = 24,
 	weight = 300,
 	antialias = true,
-	underline = true,
+	underline = false,
 	extended = true,
 })
 
@@ -148,7 +148,7 @@ surface.CreateFont( "font_hud_title", {
 	size = 32,
 	weight = 100,
 	antialias = true,
-	underline = true,
+	underline = false,
 	extended = true,
 })
 
@@ -157,7 +157,7 @@ surface.CreateFont( "font_hud_big", {
 	size = 68,
 	weight = 100,
 	antialias = true,
-	underline = true,
+	underline = false,
 	extended = true,
 })
 
@@ -166,7 +166,7 @@ surface.CreateFont( "font_hud_small", {
 	size = 14,
 	weight = 300,
 	antialias = true,
-	underline = true,
+	underline = false,
 	extended = true,
 })
 
@@ -176,7 +176,7 @@ surface.CreateFont( "font_hud_small_bold", {
 	bold = true,
 	weight = 600,
 	antialias = true,
-	underline = true,
+	underline = false,
 	extended = true,
 })
 
@@ -185,7 +185,7 @@ surface.CreateFont( "font_base_50", {
 	size = 50,
 	weight = 0,
 	antialias = true,
-	underline = true,
+	underline = false,
 	extended = true,
 })
 
@@ -194,7 +194,7 @@ surface.CreateFont( "font_base_3d2d", {
 	size = 128,
 	weight = 1000,
   antialias = true,
-	underline = true,
+	underline = false,
 	extended = true,
   shadow = false
 })
